@@ -67,7 +67,7 @@ int main(void) {
     task *tasks[] = {&task1};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
-    task1.state = shift;
+    task1.state = show_obs;
     task1.period = 1;
     task1.elapsedTime = task1.period;
     task1.TickFct = &Demo_Tick;
