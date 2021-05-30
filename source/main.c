@@ -42,11 +42,11 @@ int Demo_Tick(int state) {
     // Actions
     switch (state) {
         case show_obs:    
-            pattern = 0x1F;
+            pattern = 0x00;
             row = 0x80;
             break;
         case show_player:
-            pattern = 0x04;
+            pattern = 0xFF;
             row = 0x02;
             break;
         default:
