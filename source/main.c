@@ -46,8 +46,8 @@ int Demo_Tick(int state) {
             row = 0x80;
             break;
         case show_player:
-            pattern = 0x02;
-            row = 0x40;
+            pattern = 0x04;
+            row = 0x20;
             break;
         default:
     break;
