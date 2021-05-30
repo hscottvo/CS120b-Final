@@ -33,7 +33,7 @@ int Demo_Tick(int state) {
             state = show_player;  
             break;
         case show_player:
-            state = show_obs;
+            state = show_player;
             break;
         default:    
             state = show_obs;
