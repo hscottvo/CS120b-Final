@@ -76,7 +76,7 @@ int main(void) {
         GCD = findGCD(GCD, tasks[i]->period);
     }
 
-    Timer_Set(GCD);
+    TimerSet(GCD);
     TimerOn();
     /* Insert your solution below */
     while (1) {
