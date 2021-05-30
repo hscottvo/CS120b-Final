@@ -19,8 +19,23 @@
 // LED Matrix Demo SynchSM
 // Period: 100 ms
 //--------------------------------------
-enum Demo_States {show_obs, show_player};
-int Demo_Tick(int state) {
+enum disp_states {show_obs, show_player};
+double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
+                      440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
+                      880, 932.3, 987.8, 1047,  1109,  1175,  1245,  1319,  1397,  1480, 1568, 1661, 0};
+
+enum notes {a_1, b_flat_1, b_1, c_1, d_flat_1, d_1, e_flat_1, e_1, f_1, g_flat_1, g_1, a_flat_1,
+            a_2, b_flat_2, b_2, c_2, d_flat_2, d_2, e_flat_2, e_2, f_2, g_flat_2, g_2, a_flat_2,
+            a_3, b_flat_3, b_3, c_3, d_flat_3, d_3, e_flat_3, e_3, f_3, g_flat_3, g_3, a_flat_3, rest};
+
+unsigned char title_melody[48] = {a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, a_2, 
+                                g_1, g_1, g_1, a_2, g_1, d_1, e_1, e_1, e_1, e_1, e_1, e_1,
+                                a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, c_2,
+                                d_2, d_2, c_2, c_2, g_2, g_2, e_2, e_2, e_2, e_2, e_2, e_2};
+
+unsigned title_melody_index = 0x00;
+
+int display(int state) {
 
     // Local Variables
     static unsigned char pattern = 0x00;    // LED pattern - 0: LED off; 1: LED on
@@ -70,7 +85,7 @@ int main(void) {
     task1.state = show_obs;
     task1.period = 1;
     task1.elapsedTime = task1.period;
-    task1.TickFct = &Demo_Tick;
+    task1.TickFct = &display;
 
     unsigned long GCD = tasks[0]->period;
     for(unsigned long i = 1; i < numTasks; i++) {
