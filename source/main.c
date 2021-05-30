@@ -73,7 +73,7 @@ int main(void) {
 
     unsigned long GCD = tasks[0]->period;
     for(unsigned long i = 1; i < numTasks; i++) {
-        GCD = findGCD, tasks[i]->period);
+        GCD = findGCD(GCD, tasks[i]->period);
     }
 
     Timer_Set(GCD);
