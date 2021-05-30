@@ -19,40 +19,41 @@
 // LED Matrix Demo SynchSM
 // Period: 100 ms
 //--------------------------------------
-enum Demo_States {shift};
+enum Demo_States {show_obs, show_player};
 int Demo_Tick(int state) {
 
     // Local Variables
-    static unsigned char pattern = 0x80;    // LED pattern - 0: LED off; 1: LED on
-    static unsigned char row = 0xFE;      // Row(s) displaying pattern. 
+    static unsigned char pattern = 0x00;    // LED pattern - 0: LED off; 1: LED on
+    static unsigned char row = 0x00;      // Row(s) displaying pattern. 
                             // 0: display pattern on row
                             // 1: do NOT display pattern on row
     // Transitions
     switch (state) {
-        case shift:    
+        case show_obs:  
+            state = show_player;  
+            break;
+        case show_player:
+            state = show_obs;
             break;
         default:    
-            state = shift;
+            state = show_obs;
             break;
     }    
     // Actions
     switch (state) {
-        case shift:    
-            if (row == 0xEF && pattern == 0x01) { // Reset demo 
-                pattern = 0x80;            
-                row = 0xFE;
-            } else if (pattern == 0x01) { // Move LED to start of next row
-                pattern = 0x80;
-                row = (row << 1) | 0x01;
-            } else { // Shift LED one spot to the right on current row
-                pattern >>= 1;
-            }
+        case show_obs:    
+            pattern = 0x1F;
+            row = 0x80;
+            break;
+        case show_player:
+            pattern = 0x04;
+            row = 0x01;
             break;
         default:
     break;
     }
-    PORTC = pattern;    // Pattern to display
-    PORTD = row;        // Row(s) displaying pattern    
+    PORTC = row;    // Pattern to display
+    PORTD = ~pattern;        // Row(s) displaying pattern    
     return state;
 }
 
@@ -67,7 +68,7 @@ int main(void) {
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
     task1.state = shift;
-    task1.period = 100;
+    task1.period = 1;
     task1.elapsedTime = task1.period;
     task1.TickFct = &Demo_Tick;
 
