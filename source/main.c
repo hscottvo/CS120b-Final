@@ -174,16 +174,16 @@ int game(int state) {
     }
     switch(state) {
         case game_wait: 
-            PORTA = (tempA & 0x07) | 0x08;
+            // PORTA = (tempA & 0x07) | 0x08;
             break;
         case game_start:
         case game_playing: 
         case game_reset:
-            PORTA = (tempA & 0x07) | 0x10;
+            // PORTA = (tempA & 0x07) | 0x10;
             break;
         case game_over:
         case game_over_press:
-            PORTA = (tempA & 0x07) | 0x20;
+            // PORTA = (tempA & 0x07) | 0x20;
             break;
     }
     game_state = state;
@@ -230,6 +230,7 @@ int main(void) {
 
     while (1) {
         tempA = ~PINA;
+        if ((tempA & 0x07) == 0x02) PORTA = (tempA & 0x07) | 0x08;
         task2.state = mus_state;
         task3.state = game_state;
         for(unsigned long i = 0; i < numTasks; i++) {
