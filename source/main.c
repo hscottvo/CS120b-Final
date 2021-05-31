@@ -13,6 +13,7 @@
 #include "timer.h"
 #include "bit.h"
 #include "scheduler.h"
+#include "speaker.h"
 #endif
 
 double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
