@@ -209,22 +209,22 @@ int main(void) {
     task *tasks[] = {&task1, &task2, &task3};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
-    task1.state = show_obs;
-    task1.period = 1;
-    task1.elapsedTime = task1.period;
-    task1.TickFct = &display;
+    task3.state = show_obs;
+    task3.period = 1;
+    task3.elapsedTime = task3.period;
+    task3.TickFct = &display;
 
     mus_state = mus_intro;
-    task2.state = mus_state;
-    task2.period = title_melody_period;
-    task2.elapsedTime = task2.period;
-    task2.TickFct = &music;
+    task1.state = mus_state;
+    task1.period = title_melody_period;
+    task1.elapsedTime = task1.period;
+    task1.TickFct = &music;
 
     game_state = game_wait;
-    task3.state = game_state;
-    task3.period = 100;
-    task3.elapsedTime = task3.period;
-    task3.TickFct = &game;
+    task2.state = game_state;
+    task2.period = 100;
+    task2.elapsedTime = task2.period;
+    task2.TickFct = &game;
 
     TimerSet(1);
     TimerOn();
@@ -236,7 +236,7 @@ int main(void) {
         task3.state = game_state;
         task2.period = melody_period;
         // task2.elapsedTime = task2.period;
-        for(unsigned long i = 0; i < numTasks - 1; i++) {
+        for(unsigned long i = 0; i < numTasks-1; i++) {
             if(tasks[i]->elapsedTime >= tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
