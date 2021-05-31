@@ -104,7 +104,8 @@ int main(void) {
     task1.elapsedTime = task1.period;
     task1.TickFct = &display;
 
-    task2.state = mus_intro;
+    mus_state = mus_intro;
+    task2.state = mus_state;
     task2.period = 333;
     task2.elapsedTime = task2.period;
     task2.TickFct = &music;
