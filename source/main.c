@@ -60,12 +60,12 @@ enum notes {a_1, b_flat_1, b_1, c_1, d_flat_1, d_1, e_flat_1, e_1, f_1, g_flat_1
 unsigned short title_melody_period = 333; // note = 8th note ; 3/4 time
 unsigned char title_melody_size = 96;
 unsigned char title_melody[96] = {a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, a_2, 
-                                  g_1, g_1, g_1, a_2, g_1, d_1, e_1, e_1, e_1, e_1, e_1, e_1,
+                                  g_1, g_1, g_1, a_2, g_1, d_1, e_1, e_1, e_1, e_1, e_1, rest,
                                   a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, b_2, c_2, c_2,
                                   d_2, d_2, c_2, c_2, d_2, g_2, e_2, e_2, e_2, e_2, e_2, rest,
                                   a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, a_2,
                                   g_1, g_1, g_1, a_2, g_1, d_1, e_1, e_1, e_1, e_1, e_1, e_1,
-                                  f_1, g_1, a_2, a_2, a_2, c_2, b_2, b_2, g_1, g_1, e_1, e_1, 
+                                  f_1, g_1, a_2, a_2, a_2, c_2, b_2, b_2, g_1, g_1, e_1, rest, 
                                   a_2, a_2, a_2, a_2, e_2, d_2, d_flat_2, d_flat_2, d_flat_2, d_flat_2, d_flat_2, rest};
 
 unsigned short gameplay_melody_period = 83; // note = 16th note; 4/4 time
