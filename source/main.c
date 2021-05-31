@@ -13,13 +13,9 @@
 #include "timer.h"
 #include "bit.h"
 #include "scheduler.h"
+#include "speaker.h"
 #endif
 
-//--------------------------------------
-// LED Matrix Demo SynchSM
-// Period: 100 ms
-//--------------------------------------
-enum disp_states {show_obs, show_player};
 double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
                       880, 932.3, 987.8, 1047,  1109,  1175,  1245,  1319,  1397,  1480, 1568, 1661, 0};
@@ -33,8 +29,29 @@ unsigned char title_melody[48] = {a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c
                                 a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, c_2,
                                 d_2, d_2, c_2, c_2, g_2, g_2, e_2, e_2, e_2, e_2, e_2, e_2};
 
-unsigned title_melody_index = 0x00;
+unsigned char title_melody_size = 48;
 
+unsigned char melody_index = 0x00;
+
+enum mus_states {mus_intro, mus_gameplay, mus_over} mus_state;
+
+int music(int state) {
+    state = mus_state;
+    switch(state) {
+        case mus_intro: 
+            set_PWM(title_melody[melody_index]);
+            melody_index = (melody_index + 1) % 48;
+            break;
+        case mus_gameplay:
+            break;
+        case mus_over:
+            break;
+        default:
+            break;
+    }
+}
+
+enum disp_states {show_obs, show_player};
 int display(int state) {
 
     // Local Variables
@@ -78,14 +95,19 @@ int main(void) {
     DDRC = 0xFF; PORTC = 0x00;
     DDRD = 0xFF; PORTD = 0x00;
 
-    static task task1;
-    task *tasks[] = {&task1};
+    static task task1, task2;
+    task *tasks[] = {&task1, &task2};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
     task1.state = show_obs;
     task1.period = 1;
     task1.elapsedTime = task1.period;
     task1.TickFct = &display;
+
+    task2.state = mus_intro;
+    task2.period = 333;
+    task2.elapsedTime = task2.period;
+    task2.TickFct = &music;
 
     unsigned long GCD = tasks[0]->period;
     for(unsigned long i = 1; i < numTasks; i++) {
@@ -94,6 +116,7 @@ int main(void) {
 
     TimerSet(GCD);
     TimerOn();
+    PWM_on();
     /* Insert your solution below */
     while (1) {
         for(unsigned long i = 0; i < numTasks; i++) {
