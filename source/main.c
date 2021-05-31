@@ -161,7 +161,7 @@ int game(int state) {
             else state = game_playing;
             break;
         case game_reset:
-            if ((tempA & 0x07)pA == 0x02) state = game_reset;
+            if ((tempA & 0x07) == 0x02) state = game_reset;
             else {
                 state = game_wait;
                 melody_index = 0x00;
