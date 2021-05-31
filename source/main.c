@@ -176,6 +176,7 @@ int game(int state) {
                 melody_index = 0x00;
                 mus_state = mus_intro;
                 melody_period = title_melody_period;
+                set_PWM(0);
             }
             break;
         default: 
