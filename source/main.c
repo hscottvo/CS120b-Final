@@ -144,6 +144,7 @@ int display(int state) {
 // enum game_states {game_wait, game_start, game_playing, game_reset, game_over, game_over_press} game_state; This is above, here just for reference
 int game(int state) {
     tempA = ~PINA & 0x07;
+    if (tempA == 0x00) PORTA = (tempA & 0x07)
     state = game_state;
     switch(state) {
         case game_wait: 
@@ -175,16 +176,16 @@ int game(int state) {
     }
     switch(state) {
         case game_wait: 
-            PORTA = (tempA & 0x07) | 0x08;
+            // PORTA = (tempA & 0x07) | 0x08;
             break;
         case game_start:
         case game_playing: 
         case game_reset:
-            PORTA = (tempA & 0x07) | 0x10;
+            // PORTA = (tempA & 0x07) | 0x10;
             break;
         case game_over:
         case game_over_press:
-            PORTA = (tempA & 0x07) | 0x20;
+            // PORTA = (tempA & 0x07) | 0x20;
             break;
     }
     game_state = state;
@@ -232,7 +233,7 @@ int main(void) {
     while (1) {
         task2.state = mus_state;
         task3.state = game_state;
-        for(unsigned long i = 0; i < numTasks; i++) {
+        for(unsigned long i = 1; i < numTasks; i++) {
             if(tasks[i]->elapsedTime == tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
