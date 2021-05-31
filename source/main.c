@@ -219,7 +219,7 @@ int main(void) {
     task3.TickFct = &display;
 
     mus_state = mus_intro;
-    melody_period = title_melody_period
+    melody_period = title_melody_period;
     task2.state = mus_state;
     task2.period = melody_period;
     task2.elapsedTime = task2.period;
