@@ -215,16 +215,16 @@ int main(void) {
     task3.TickFct = &display;
 
     mus_state = mus_intro;
-    task1.state = mus_state;
-    task1.period = title_melody_period;
-    task1.elapsedTime = task1.period;
-    task1.TickFct = &music;
+    task2.state = mus_state;
+    task2.period = title_melody_period;
+    task2.elapsedTime = task2.period;
+    task2.TickFct = &music;
 
     game_state = game_wait;
-    task2.state = game_state;
-    task2.period = 100;
-    task2.elapsedTime = task2.period;
-    task2.TickFct = &game;
+    task1.state = game_state;
+    task1.period = 100;
+    task1.elapsedTime = task1.period;
+    task1.TickFct = &game;
 
     TimerSet(1);
     TimerOn();
