@@ -39,7 +39,7 @@ int music(int state) {
     state = mus_state;
     switch(state) {
         case mus_intro: 
-            set_PWM(title_melody[melody_index]);
+            set_PWM(chromatic[title_melody[melody_index]]);
             melody_index = (melody_index + 1) % 48;
             break;
         case mus_gameplay:
