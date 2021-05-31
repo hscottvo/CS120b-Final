@@ -184,20 +184,6 @@ int game(int state) {
             state = game_wait;
             break;
     }
-    switch(state) {
-        case game_wait: 
-            PORTA = (PORTA & 0x07) | 0x08;
-            break;
-        case game_start:
-        case game_playing: 
-        case game_reset:
-            PORTA = (PORTA & 0x07) | 0x10;
-            break;
-        case game_over:
-        case game_over_press:
-            PORTA = (PORTA & 0x07) | 0x20;
-            break;
-    }
     game_state = state;
     return state;
 }
