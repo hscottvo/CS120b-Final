@@ -54,7 +54,7 @@ enum notes {a_1, b_flat_1, b_1, c_1, d_flat_1, d_1, e_flat_1, e_1, f_1, g_flat_1
             a_2, b_flat_2, b_2, c_2, d_flat_2, d_2, e_flat_2, e_2, f_2, g_flat_2, g_2, a_flat_2,
             a_3, b_flat_3, b_3, c_3, d_flat_3, d_3, e_flat_3, e_3, f_3, g_flat_3, g_3, a_flat_3, rest};
 
-unsigned short title_melody_period = 333;
+unsigned short title_melody_period = 333; // note = 8th note ; 3/4 time
 unsigned char title_melody_size = 96;
 unsigned char title_melody[96] = {a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, a_2, 
                                   g_1, g_1, g_1, a_2, g_1, d_1, e_1, e_1, e_1, e_1, e_1, e_1,
@@ -64,6 +64,13 @@ unsigned char title_melody[96] = {a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c
                                   g_1, g_1, g_1, a_2, g_1, d_1, e_1, e_1, e_1, e_1, e_1, e_1,
                                   f_1, g_1, a_2, a_2, a_2, c_2, b_2, b_2, g_1, g_1, e_1, e_1, 
                                   a_2, a_2, a_2, a_2, e_2, d_2, d_flat_2, d_flat_2, d_flat_2, d_flat_2, d_flat_2, rest};
+
+unsigned short gameplay_melody_period = 97; // note = 16th note; 4/4 time
+unsigned char gameplay_melody_size = 64;
+unsigned char gameplay_melody[64] = {a_flat_1, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, 
+                                   rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, a_2, a_2, a_flat_1, a_flat_1, a_2, a_2, a_flat_1, rest,
+                                   a_flat_1, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest,
+                                   g_flat_1, g_flat_1, g_flat_1, g_flat_1, e_flat_1, e_flat_1, e_flat_1, e_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, rest};
 
 unsigned char melody_index = 0x00;
 
@@ -77,6 +84,8 @@ int music(int state) {
             melody_index = (melody_index + 1) % title_melody_size;
             break;
         case mus_gameplay:
+            set_PWM(chromatic[gameplay_melody[melody_index]]);
+            melody_index = (melody_index + 1) % gameplay_melody_size;
             break;
         case mus_over:
             break;
@@ -141,7 +150,7 @@ int main(void) {
 
     mus_state = mus_intro;
     task2.state = mus_state;
-    task2.period = title_melody_period;
+    task2.period = gameplay_melody_period;
     task2.elapsedTime = task2.period;
     task2.TickFct = &music;
 
