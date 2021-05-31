@@ -67,11 +67,15 @@ unsigned char title_melody[96] = {a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c
                                   a_2, a_2, a_2, a_2, e_2, d_2, d_flat_2, d_flat_2, d_flat_2, d_flat_2, d_flat_2, rest};
 
 unsigned short gameplay_melody_period = 83; // note = 16th note; 4/4 time
-unsigned char gameplay_melody_size = 64;
-unsigned char gameplay_melody[64] = {a_flat_1, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, 
+unsigned char gameplay_melody_size = 128;
+unsigned char gameplay_melody[128] = {a_flat_1, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, 
                                    rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, a_2, a_2, a_flat_1, a_flat_1, a_2, a_2, a_flat_1, rest,
                                    a_flat_1, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest,
-                                   g_flat_1, g_flat_1, g_flat_1, g_flat_1, e_flat_1, e_flat_1, e_flat_1, e_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, rest};
+                                   g_flat_1, g_flat_1, g_flat_1, g_flat_1, e_flat_1, e_flat_1, e_flat_1, e_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, a_flat_1, rest,
+                                   a_flat_1, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, 
+                                   rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, a_2, a_2, a_flat_1, a_flat_1, a_2, a_2, a_flat_1, rest,
+                                   a_flat_1, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest,
+                                   a_2, a_2, a_2, a_2, b_flat_2, b_flat_2, b_flat_2, b_flat_2, b_2, b_2, b_2, b_2, c_2, c_2, c_2, rest};
 
 unsigned char melody_index = 0x00;
 
