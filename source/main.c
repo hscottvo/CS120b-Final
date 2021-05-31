@@ -162,8 +162,8 @@ int game(int state) {
             }
             break;
         case game_start: 
-            if ((tempA & 0x07) == 0x02) state = game_start; 
-            else state = game_playing;
+            if ((tempA & 0x07) == 0x02) state = game_playing; 
+            else state = game_start;
             break;
         case game_playing: 
             if ((tempA & 0x07) == 0x02) state = game_reset;
@@ -233,10 +233,8 @@ int main(void) {
     /* Insert your solution below */
 
     while (1) {
-        // task2.state = mus_state;
         task3.state = game_state;
         task2.period = melody_period;
-        // task2.elapsedTime = task2.period;
         for(unsigned long i = 0; i < numTasks-1; i++) {
             if(tasks[i]->elapsedTime >= tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
