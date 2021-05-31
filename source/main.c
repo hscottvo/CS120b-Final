@@ -226,21 +226,24 @@ int main(void) {
         GCD = findGCD(GCD, tasks[i]->period);
     }
 
-    TimerSet(GCD);
+    // TimerSet(GCD);
+    TimerSet(1);
     TimerOn();
     PWM_on();
     /* Insert your solution below */
 
     while (1) {
-        task2.state = mus_state;
-        task3.state = game_state;
-        for(unsigned long i = 1; i < numTasks; i++) {
-            if(tasks[i]->elapsedTime == tasks[i]->period) {
-                tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-                tasks[i]->elapsedTime = 0;
-            }
-            tasks[i]->elapsedTime += GCD;
-        }
+        // task2.state = mus_state;
+        // task3.state = game_state;
+        // for(unsigned long i = 1; i < numTasks; i++) {
+        //     if(tasks[i]->elapsedTime == tasks[i]->period) {
+        //         tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
+        //         tasks[i]->elapsedTime = 0;
+        //     }
+        //     tasks[i]->elapsedTime += GCD;
+        // }
+        tempA = (~PINA) & 0x07;
+        PORTA = tempA << 3;
         while (!TimerFlag);
         TimerFlag = 0;
     }
