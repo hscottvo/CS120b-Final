@@ -54,6 +54,7 @@ enum notes {a_1, b_flat_1, b_1, c_1, d_flat_1, d_1, e_flat_1, e_1, f_1, g_flat_1
             a_2, b_flat_2, b_2, c_2, d_flat_2, d_2, e_flat_2, e_2, f_2, g_flat_2, g_2, a_flat_2,
             a_3, b_flat_3, b_3, c_3, d_flat_3, d_3, e_flat_3, e_3, f_3, g_flat_3, g_3, a_flat_3, rest};
 
+unsigned short title_melody_period = 333;
 unsigned char title_melody_size = 96;
 unsigned char title_melody[96] = {a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, a_2, 
                                   g_1, g_1, g_1, a_2, g_1, d_1, e_1, e_1, e_1, e_1, e_1, e_1,
@@ -140,7 +141,7 @@ int main(void) {
 
     mus_state = mus_intro;
     task2.state = mus_state;
-    task2.period = 333;
+    task2.period = title_melody_period;
     task2.elapsedTime = task2.period;
     task2.TickFct = &music;
 
