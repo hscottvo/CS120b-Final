@@ -102,6 +102,7 @@ int music(int state) {
         default:
             break;
     }
+    return state;
 }
 
 enum disp_states {show_obs, show_player};
@@ -232,7 +233,7 @@ int main(void) {
     /* Insert your solution below */
 
     while (1) {
-        task2.state = mus_state;
+        // task2.state = mus_state;
         task3.state = game_state;
         task2.period = melody_period;
         // task2.elapsedTime = task2.period;
