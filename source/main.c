@@ -202,10 +202,10 @@ int main(void) {
     task *tasks[] = {&task1, &task2, &task3};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
-    task1.state = show_obs;
-    task1.period = 1;
-    task1.elapsedTime = task1.period;
-    task1.TickFct = &display;
+    task3.state = show_obs;
+    task3.period = 1;
+    task3.elapsedTime = task1.period;
+    task3.TickFct = &display;
 
     mus_state = mus_over;
     task2.state = mus_state;
@@ -214,10 +214,10 @@ int main(void) {
     task2.TickFct = &music;
 
     game_state = game_playing;
-    task3.state = game_state;
-    task3.period = 100;
-    task3.elapsedTime = task3.period;
-    task3.TickFct = &game;
+    task1.state = game_state;
+    task1.period = 100;
+    task1.elapsedTime = task3.period;
+    task1.TickFct = &game;
 
     unsigned long GCD = tasks[0]->period;
     for(unsigned long i = 1; i < numTasks; i++) {
