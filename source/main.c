@@ -156,11 +156,11 @@ int game(int state) {
                 melody_period = gameplay_melody_period;
                 set_PWM(0);
             }
-            else {
-                state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
-                mus_state = mus_intro;
-                melody_period = title_melody_period;
-            }
+            // else {
+            //     state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
+            //     mus_state = mus_intro;
+            //     melody_period = title_melody_period;
+            // }
             break;
         case game_start: 
             if ((tempA & 0x07) == 0x02) state = game_start; 
