@@ -224,12 +224,7 @@ int main(void) {
     task1.elapsedTime = task1.period;
     task1.TickFct = &game;
 
-    unsigned long GCD = tasks[0]->period;
-    for(unsigned long i = 1; i < numTasks; i++) {
-        GCD = findGCD(GCD, tasks[i]->period);
-    }
-
-    TimerSet(GCD);
+    TimerSet(1);
     TimerOn();
     PWM_on();
     /* Insert your solution below */
@@ -237,14 +232,12 @@ int main(void) {
     while (1) {
         task2.state = mus_state;
         task3.state = game_state;
-        // task2.period = melody_period;
-        // task2.elapsedTime = task2.period;
         for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime == tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            tasks[i]->elapsedTime += GCD;
+            tasks[i]->elapsedTime += 1;
         }
         while (!TimerFlag);
         TimerFlag = 0;
