@@ -154,6 +154,7 @@ int game(int state) {
                 melody_index = 0x00;
                 mus_state = mus_gameplay;
                 melody_period = gameplay_melody_period;
+                set_PWM(0);
             }
             else {
                 state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
