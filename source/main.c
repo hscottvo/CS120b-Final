@@ -146,22 +146,22 @@ int game(int state) {
     state = game_state;
     switch(state) {
         case game_wait: 
-            if (tempA == 0x02) {
+            if ((tempA & 0x07) == 0x02) {
                 state = game_start;      // press middle button: start game
                 melody_index = 0x00;
             }
             else state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
             break;
         case game_start: 
-            if (tempA == 0x02) state = game_start; 
+            if ((tempA & 0x07) == 0x02) state = game_start; 
             else state = game_playing;
             break;
         case game_playing: 
-            if (tempA == 0x02) state = game_reset;
+            if ((tempA & 0x07) == 0x02) state = game_reset;
             else state = game_playing;
             break;
         case game_reset:
-            if (tempA == 0x02) state = game_reset;
+            if (tem(tempA & 0x07)pA == 0x02) state = game_reset;
             else {
                 state = game_wait;
                 melody_index = 0x00;
