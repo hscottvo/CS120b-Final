@@ -206,7 +206,7 @@ int main(void) {
     
     task3.state = show_obs;
     task3.period = 1;
-    task3.elapsedTime = task1.period;
+    task3.elapsedTime = task3.period;
     task3.TickFct = &display;
 
     mus_state = mus_over;
@@ -218,7 +218,7 @@ int main(void) {
     game_state = game_playing;
     task1.state = game_state;
     task1.period = 100;
-    task1.elapsedTime = task3.period;
+    task1.elapsedTime = task1.period;
     task1.TickFct = &game;
 
     unsigned long GCD = tasks[0]->period;
