@@ -205,8 +205,7 @@ int main(void) {
 
     static task task1, task2, task3;
     task *tasks[] = {&task1, &task2, &task3};
-    // const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
-    const unsigned short numTasks = 1;
+    const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
     task3.state = show_obs;
     task3.period = 1;
@@ -235,7 +234,7 @@ int main(void) {
         task3.state = game_state;
         // task2.period = melody_period;
         // task2.elapsedTime = task2.period;
-        for(unsigned long i = 0; i < numTasks; i++) {
+        for(unsigned long i = 0; i < numTasks - 1; i++) {
             if(tasks[i]->elapsedTime == tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
