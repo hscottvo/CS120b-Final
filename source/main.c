@@ -158,12 +158,13 @@ int game(int state) {
             else {
                 state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
                 mus_state = mus_intro;
+                melody_index = 0x00;
                 melody_period = title_melody_period;
             }
             break;
         case game_start: 
-            if ((tempA & 0x07) == 0x02) state = game_playing; 
-            else state = game_start;
+            if ((tempA & 0x07) == 0x02) state = game_start; 
+            else state = game_playing;
             break;
         case game_playing: 
             if ((tempA & 0x07) == 0x02) state = game_reset;
