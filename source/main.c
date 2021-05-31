@@ -187,6 +187,7 @@ int game(int state) {
             PORTA = (tempA & 0x07) | 0x20;
             break;
     }
+    game_state = state;
     return state;
 }
 
@@ -212,7 +213,8 @@ int main(void) {
     task2.elapsedTime = task2.period;
     task2.TickFct = &music;
 
-    task3.state = game_wait;
+    game_state = game_wait;
+    task3.state = game_state;
     task3.period = 100;
     task3.elapsedTime = task3.period;
     task3.TickFct = &game;
@@ -229,6 +231,8 @@ int main(void) {
 
     while (1) {
         tempA = ~PINA;
+        task2.state = mus_state;
+        task3.state = game_state;
         for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime == tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
