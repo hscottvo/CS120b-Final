@@ -80,7 +80,7 @@ unsigned char gameplay_melody[128] = {a_flat_1, rest, a_flat_1, rest, rest, rest
                                    a_2, a_2, a_2, a_2, b_flat_2, b_flat_2, b_flat_2, b_flat_2, b_2, b_2, b_2, b_2, c_2, c_2, c_2, rest};
 
 unsigned char melody_index = 0x00;
-unsigned short melody_period = 0x00;
+unsigned short melody_period = 100;
 
 enum mus_states {mus_intro, mus_gameplay, mus_over} mus_state;
 enum game_states {game_wait, game_start, game_playing, game_reset, game_over, game_over_press} game_state;
