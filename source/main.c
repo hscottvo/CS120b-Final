@@ -54,12 +54,15 @@ enum notes {a_1, b_flat_1, b_1, c_1, d_flat_1, d_1, e_flat_1, e_1, f_1, g_flat_1
             a_2, b_flat_2, b_2, c_2, d_flat_2, d_2, e_flat_2, e_2, f_2, g_flat_2, g_2, a_flat_2,
             a_3, b_flat_3, b_3, c_3, d_flat_3, d_3, e_flat_3, e_3, f_3, g_flat_3, g_3, a_flat_3, rest};
 
-unsigned char title_melody[48] = {a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, a_2, 
+unsigned char title_melody_size = 96;
+unsigned char title_melody[title_melody_size] = {a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, a_2, 
                                 g_1, g_1, g_1, a_2, g_1, d_1, e_1, e_1, e_1, e_1, e_1, e_1,
                                 a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, c_2,
-                                d_2, d_2, c_2, c_2, g_2, g_2, e_2, e_2, e_2, e_2, e_2, e_2};
-
-unsigned char title_melody_size = 48;
+                                d_2, d_2, c_2, c_2, g_2, g_2, e_2, e_2, e_2, e_2, e_2, e_2,
+                                a_2, a_1, e_1, a_1, a_2, b_2, c_2, c_2, c_2, c_2, b_2, a_2,
+                                g_1, g_1, g_1, a_2, g_1, d_1, e_1, e_1, e_1, e_1, e_1, e_1,
+                                f_1, g_1, a_2, a_2, a_2, c_2, b_2, b_2, g_1, g_1, e_1, e_1, 
+                                a_2, a_2, a_2, a_2, a_2, a_2, a_2, a_2, a_2, a_2, a_2, rest};
 
 unsigned char melody_index = 0x00;
 
@@ -70,7 +73,7 @@ int music(int state) {
     switch(state) {
         case mus_intro: 
             set_PWM(chromatic[title_melody[melody_index]]);
-            melody_index = (melody_index + 1) % 48;
+            melody_index = (melody_index + 1) % title_melody_size;
             break;
         case mus_gameplay:
             break;
