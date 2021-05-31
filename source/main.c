@@ -148,7 +148,7 @@ int main(void) {
     task1.elapsedTime = task1.period;
     task1.TickFct = &display;
 
-    mus_state = mus_intro;
+    mus_state = mus_gameplay;
     task2.state = mus_state;
     task2.period = gameplay_melody_period;
     task2.elapsedTime = task2.period;
