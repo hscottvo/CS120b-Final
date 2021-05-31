@@ -13,8 +13,38 @@
 #include "timer.h"
 #include "bit.h"
 #include "scheduler.h"
-#include "speaker.h"
 #endif
+
+void set_PWM(double frequency) {
+    static double current_frequency;
+
+    if (frequency != current_frequency) {
+        if (!frequency) {TCCR3B &= 0x08;}
+        else {TCCR3B |= 0x03;}
+
+        if (frequency < 0.954) {OCR3A = 0xFFFF; }
+
+        else if (frequency > 31250) { OCR3A = 0x0000; }
+
+        else {OCR3A = (short)(8000000 / (128 * frequency)) - 1;}
+
+        TCNT3 = 0;
+        current_frequency = frequency;
+    }
+}
+
+void PWM_on() {
+    TCCR3A = (1 << COM3A0);
+
+    TCCR3B = (1 << WGM32) | (1 << CS31) | (1 << CS30);
+
+    set_PWM(0);
+}
+
+void PWM_off() {
+    TCCR3A = 0x00;
+    TCCR3B = 0x00;
+}
 
 double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
