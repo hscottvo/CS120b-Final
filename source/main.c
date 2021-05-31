@@ -13,7 +13,6 @@
 #include "timer.h"
 #include "bit.h"
 #include "scheduler.h"
-#include "speaker.h"
 #endif
 
 double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
@@ -39,7 +38,7 @@ int music(int state) {
     state = mus_state;
     switch(state) {
         case mus_intro: 
-            set_PWM(chromatic[title_melody[melody_index]]);
+            // set_PWM(chromatic[title_melody[melody_index]]);
             melody_index = (melody_index + 1) % 48;
             break;
         case mus_gameplay:
@@ -119,7 +118,9 @@ int main(void) {
     TimerOn();
     PWM_on();
     /* Insert your solution below */
+
     while (1) {
+        set_PWM(440);
         for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime == tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
