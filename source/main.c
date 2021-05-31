@@ -149,6 +149,7 @@ int game(int state) {
             if ((tempA & 0x07) == 0x02) {
                 state = game_start;      // press middle button: start game
                 melody_index = 0x00;
+                mus_state = mus_gameplay;
             }
             else state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
             break;
@@ -165,6 +166,7 @@ int game(int state) {
             else {
                 state = game_wait;
                 melody_index = 0x00;
+                mus_state = mus_intro;
             }
         default: 
             state = game_wait;
@@ -172,18 +174,15 @@ int game(int state) {
     }
     switch(state) {
         case game_wait: 
-            mus_state = mus_intro;
             PORTA = (tempA & 0x07) | 0x08;
             break;
         case game_start:
         case game_playing: 
         case game_reset:
-            mus_state = mus_gameplay;
             PORTA = (tempA & 0x07) | 0x10;
             break;
         case game_over:
         case game_over_press:
-            mus_state = mus_over;
             PORTA = (tempA & 0x07) | 0x20;
             break;
     }
