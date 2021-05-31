@@ -144,7 +144,8 @@ int display(int state) {
 // enum game_states {game_wait, game_start, game_playing, game_reset, game_over, game_over_press} game_state; This is above, here just for reference
 int game(int state) {
     tempA = ~PINA & 0x07;
-    if (tempA == 0x00) PORTA = (tempA & 0x07)
+    if (tempA == 0x00) PORTA = (tempA & 0x07) | 0x00;
+    else PORTA = (tempA & 0x07) | 0x08;
     state = game_state;
     switch(state) {
         case game_wait: 
