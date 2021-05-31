@@ -237,8 +237,8 @@ int main(void) {
     while (1) {
         task2.state = mus_state;
         task3.state = game_state;
-        task2.period = melody_period;
-        task2.elapsedTime = task2.period;
+        // task2.period = melody_period;
+        // task2.elapsedTime = task2.period;
         for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime == tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
