@@ -80,6 +80,7 @@ unsigned char gameplay_melody[128] = {a_flat_1, rest, a_flat_1, rest, rest, rest
                                    a_2, a_2, a_2, a_2, b_flat_2, b_flat_2, b_flat_2, b_flat_2, b_2, b_2, b_2, b_2, c_2, c_2, c_2, rest};
 
 unsigned char melody_index = 0x00;
+unsigned short melody_period = 0x00;
 
 enum mus_states {mus_intro, mus_gameplay, mus_over} mus_state;
 enum game_states {game_wait, game_start, game_playing, game_reset, game_over, game_over_press} game_state;
@@ -153,6 +154,7 @@ int game(int state) {
                 state = game_start;      // press middle button: start game
                 melody_index = 0x00;
                 mus_state = mus_gameplay;
+                melody_period = gameplay_melody_period;
             }
             else state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
             break;
@@ -170,6 +172,7 @@ int game(int state) {
                 state = game_wait;
                 melody_index = 0x00;
                 mus_state = mus_intro;
+                melody_period = title_melody_period;
             }
         default: 
             state = game_wait;
@@ -209,7 +212,7 @@ int main(void) {
     task3.elapsedTime = task3.period;
     task3.TickFct = &display;
 
-    mus_state = mus_over;
+    mus_state = mus_intro;
     task2.state = mus_state;
     task2.period = title_melody_period;
     task2.elapsedTime = task2.period;
@@ -234,6 +237,8 @@ int main(void) {
     while (1) {
         task2.state = mus_state;
         task3.state = game_state;
+        task2.period = melody_period;
+        task2.elapsedTime = task2.period;
         for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime == tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
