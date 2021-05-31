@@ -173,15 +173,18 @@ int game(int state) {
     switch(state) {
         case game_wait: 
             mus_state = mus_intro;
+            PORTA = (tempA & 0x07) | 0x08;
             break;
         case game_start:
         case game_playing: 
         case game_reset:
             mus_state = mus_gameplay;
+            PORTA = (tempA & 0x07) | 0x10;
             break;
         case game_over:
         case game_over_press:
             mus_state = mus_over;
+            PORTA = (tempA & 0x07) | 0x20;
             break;
     }
     return state;
@@ -189,7 +192,7 @@ int game(int state) {
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRA = 0x00; PORTA = 0xFF;
+    DDRA = 0xF8; PORTA = 0x07;
     DDRB = 0xFF; PORTB = 0x00;
     DDRC = 0xFF; PORTC = 0x00;
     DDRD = 0xFF; PORTD = 0x00;
