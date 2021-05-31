@@ -158,7 +158,6 @@ int game(int state) {
             else {
                 state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
                 mus_state = mus_intro;
-                melody_index = 0x00;
                 melody_period = title_melody_period;
             }
             break;
@@ -178,6 +177,7 @@ int game(int state) {
                 mus_state = mus_intro;
                 melody_period = title_melody_period;
             }
+            break;
         default: 
             state = game_wait;
             break;
