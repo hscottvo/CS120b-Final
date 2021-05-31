@@ -212,7 +212,7 @@ int main(void) {
     task3.state = game_wait;
     task3.period = 100;
     task3.elapsedTime = task3.period;
-    task3.TickFct = &game
+    task3.TickFct = &game;
 
     unsigned long GCD = tasks[0]->period;
     for(unsigned long i = 1; i < numTasks; i++) {
