@@ -243,7 +243,7 @@ int main(void) {
         //     tasks[i]->elapsedTime += GCD;
         // }
         tempA = (~PINA) & 0x07;
-        PORTA = |= tempA << 3;
+        PORTA |= tempA << 3;
         while (!TimerFlag);
         TimerFlag = 0;
     }
