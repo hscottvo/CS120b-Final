@@ -152,7 +152,6 @@ int main(void) {
     /* Insert your solution below */
 
     while (1) {
-        set_PWM(440);
         for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime == tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
