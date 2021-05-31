@@ -47,6 +47,8 @@
 //     TCCR3B = 0x00;
 // }
 
+unsigned char tempA = 0x00;
+
 double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
                       880, 932.3, 987.8, 1047,  1109,  1175,  1245,  1319,  1397,  1480, 1568, 1661, 0};
@@ -80,6 +82,7 @@ unsigned char gameplay_melody[128] = {a_flat_1, rest, a_flat_1, rest, rest, rest
 unsigned char melody_index = 0x00;
 
 enum mus_states {mus_intro, mus_gameplay, mus_over} mus_state;
+enum game_states {game_wait, game_start, game_playing, game_reset, game_over, game_over_press} game_state;
 
 int music(int state) {
     state = mus_state;
@@ -93,6 +96,7 @@ int music(int state) {
             melody_index = (melody_index + 1) % gameplay_melody_size;
             break;
         case mus_over:
+            set_PWM(440); // TODO: Write game over sequence
             break;
         default:
             break;
@@ -137,15 +141,61 @@ int display(int state) {
     return state;
 }
 
+// enum game_states {game_wait, game_start, game_playing, game_reset, game_over, game_over_press} game_state; This is above, here just for reference
+int game(int state) {
+    state = game_state;
+    switch(state) {
+        case game_wait: 
+            if (tempA == 0x02) {
+                state = game_start;      // press middle button: start game
+                melody_index = 0x00;
+            }
+            else state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
+            break;
+        case game_start: 
+            if (tempA == 0x02) state = game_start; 
+            else state = game_playing;
+            break;
+        case game_playing: 
+            if (tempA == 0x02) state = game_reset;
+            else state = game_playing;
+            break;
+        case game_reset:
+            if (tempA == 0x02) state = game_reset;
+            else {
+                state = game_wait;
+                melody_index = 0x00;
+            }
+        default: 
+            state = game_wait;
+            break;
+    }
+    switch(state) {
+        case game_wait: 
+            mus_state = mus_intro;
+            break;
+        case game_start:
+        case game_playing: 
+        case game_reset:
+            mus_state = mus_gameplay;
+            break;
+        case game_over:
+        case game_over_press:
+            mus_state = mus_over;
+            break;
+    }
+    return state;
+}
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRB = 0x40; PORTB = 0xBF;
+    DDRA = 0x00; PORTA = 0xFF;
+    DDRB = 0xFF; PORTB = 0x00;
     DDRC = 0xFF; PORTC = 0x00;
     DDRD = 0xFF; PORTD = 0x00;
 
-    static task task1, task2;
-    task *tasks[] = {&task1, &task2};
+    static task task1, task2, task3;
+    task *tasks[] = {&task1, &task2, &task3};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
     task1.state = show_obs;
@@ -159,6 +209,11 @@ int main(void) {
     task2.elapsedTime = task2.period;
     task2.TickFct = &music;
 
+    task3.state = game_wait;
+    task3.period = 100;
+    task3.elapsedTime = task3.period;
+    task3.TickFct = &game
+
     unsigned long GCD = tasks[0]->period;
     for(unsigned long i = 1; i < numTasks; i++) {
         GCD = findGCD(GCD, tasks[i]->period);
@@ -170,6 +225,7 @@ int main(void) {
     /* Insert your solution below */
 
     while (1) {
+        tempA = ~PINA;
         for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime == tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
