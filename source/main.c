@@ -216,7 +216,7 @@ int main(void) {
     task2.elapsedTime = task2.period;
     task2.TickFct = &music;
 
-    game_state = game_playing;
+    game_state = game_wait;
     task1.state = game_state;
     task1.period = 100;
     task1.elapsedTime = task1.period;
