@@ -185,6 +185,7 @@ int game(int state) {
                 melody_period = gameplay_melody_period;
                 set_PWM(0);
                 obstacle = obstacles[(rand() % 8)];
+                obstacle_position = 0x80;
                 obstacle_state = obs_0;
             }
             // else {
