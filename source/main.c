@@ -175,8 +175,8 @@ int game(int state) {
         case game_playing: 
             if ((tempA & 0x07) == 0x02) state = game_reset;
             else state = game_playing;
-            PORTC = row;    // Pattern to display
-            PORTD = ~pattern;        // Row(s) displaying pattern   
+            PORTC = player;    // Pattern to display
+            PORTD = ~0x01;        // Row(s) displaying pattern   
             break;
         case game_reset:
             if ((tempA & 0x07) == 0x02) state = game_reset;
