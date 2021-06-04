@@ -123,13 +123,17 @@ int display(int state) {
                             // 0: display pattern on row
                             // 1: do NOT display pattern on row
 
-    if (game_state == game_wait ) {
+    if (game_state != game_playing) {
+        if (game_state == game_wait){
         unsigned char diff_led = 0x00;
-        for(unsigned char i = 0; i < difficulty; ++i) {
-            diff_led = diff_led << 1;
-            diff_led |= 0x01;
+            for(unsigned char i = 0; i < difficulty; ++i) {
+                diff_led = diff_led << 1;
+                diff_led |= 0x01;
+            }
+            PORTA = (PORTA & 0x07) | (diff_led << 3);
+        } else {
+            PORTA = (PORTA & 0x07) | (score << 3);
         }
-        PORTA = (PORTA & 0x07) | (diff_led << 3);
         PORTC = 0x00;
         PORTD = 0xFF;
         return state;
