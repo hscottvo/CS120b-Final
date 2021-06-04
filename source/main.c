@@ -181,6 +181,7 @@ int game(int state) {
                 obstacle_position = 0x80;
                 obstacle_state = obs_0;
                 obs_period = get_period(difficulty);
+            }
             break;
         case game_start: 
             if ((tempA & 0x07) == 0x02) state = game_start; 
