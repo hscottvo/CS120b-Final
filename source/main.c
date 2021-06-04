@@ -135,10 +135,11 @@ int display(int state) {
             PORTA = (PORTA & 0x07) | (score << 3);
         }
         PORTC = 0x00;
-        PORTD = (PORTD & 0xE0) | 0x1F;
+        PORTD = (score >> 5) | 0x1F;
         return state;
     } else {
         PORTA = (PORTA & 0x07) | (score << 3);
+        PORTD = (PORTD & 0x1F) | (score & 0xE0);
         // Transitions
         switch (state) {
             case show_obs:  
