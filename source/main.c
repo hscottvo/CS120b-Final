@@ -276,40 +276,42 @@ int control_tick(int state) {
 
 enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0};
 int obstacle_tick(int state) {
-    case obs_7:
-        state = obs_6;
-        obstacle_position = 0x40;
-        break;
-    case obs_6:
-        state = obs_5;
-        obstacle_position = 0x20;
-        break;
-    case obs_5:
-        state = obs_4;
-        obstacle_position = 0x10;
-        break;
-    case obs_4:
-        state = obs_3;
-        obstacle_position = 0x08;
-        break;
-    case obs_3:
-        state = obs_2;
-        obstacle_position = 0x04;
-        break;
-    case obs_2:
-        state = obs_1;
-        obstacle_position = 0x02;
-        break;
-    case obs_1:
-        state = obs_0;
-        obstacle_position = 0x01;
-        break;
-    case obs_0:
-        state = obs_7;
-        obstacle_position = 0x08;
-        srand(melody_index * 7);
-        obstacle = obstacles[rand() % 8];
-        break;
+    switch(state){
+        case obs_7:
+            state = obs_6;
+            obstacle_position = 0x40;
+            break;
+        case obs_6:
+            state = obs_5;
+            obstacle_position = 0x20;
+            break;
+        case obs_5:
+            state = obs_4;
+            obstacle_position = 0x10;
+            break;
+        case obs_4:
+            state = obs_3;
+            obstacle_position = 0x08;
+            break;
+        case obs_3:
+            state = obs_2;
+            obstacle_position = 0x04;
+            break;
+        case obs_2:
+            state = obs_1;
+            obstacle_position = 0x02;
+            break;
+        case obs_1:
+            state = obs_0;
+            obstacle_position = 0x01;
+            break;
+        case obs_0:
+            state = obs_7;
+            obstacle_position = 0x08;
+            srand(melody_index * 7);
+            obstacle = obstacles[rand() % 8];
+            break;
+    }
     return state;
 }
 
