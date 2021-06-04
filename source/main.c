@@ -84,11 +84,16 @@ unsigned char gameplay_melody[128] = {a_flat_1, rest, a_flat_1, rest, rest, rest
                                    a_flat_1, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest,
                                    a_2, a_2, a_2, a_2, b_flat_2, b_flat_2, b_flat_2, b_flat_2, b_2, b_2, b_2, b_2, c_2, c_2, c_2, rest};
 
+unsigned short game_over_period = 167;
+unsigned char game_over_size = 0x24;
+unsigned char game_over_melody[24] = {a_flat_1, rest, g_1, g_flat_1, rest, f_1, e_1, rest, b_1, b_1, b_1, e_1, 
+                                    e_flat_1, rest, rest, rest, rest, rest, e_flat_2, rest, rest, rest, rest, rest }
+
 unsigned char melody_index = 0x00;
 unsigned short melody_period = 100;
 
 enum mus_states {mus_intro, mus_gameplay, mus_over} mus_state;
-enum game_states {game_wait, game_start, game_playing, game_reset, game_over, game_over_press} game_state;
+enum game_states {game_wait, game_start, game_playing, game_reset, game_over} game_state;
 
 int music(int state) {
     state = mus_state;
@@ -102,7 +107,8 @@ int music(int state) {
             melody_index = (melody_index + 1) % gameplay_melody_size;
             break;
         case mus_over:
-            set_PWM(440); // TODO: Write game over sequence
+            set_PWM(chromatic[gameplay_melody[melody_index]]);
+            melody_index = (melody_index + 1) % gameplay_melody_size;
             break;
         default:
             break;
@@ -160,7 +166,7 @@ int display(int state) {
     return state;
 }
 
-// enum game_states {game_wait, game_start, game_playing, game_reset, game_over, game_over_press} game_state; This is above, here just for reference
+// enum game_states {game_wait, game_start, game_playing, game_reset, game_over} game_state; This is above, here just for reference
 int game(int state) {
     tempA = ~PINA & 0x07;
     state = game_state;
@@ -197,6 +203,14 @@ int game(int state) {
                 set_PWM(0);
             }
             break;
+        case game_over:
+            if (melody_index >= 24) {
+                state = game_wait;
+                melody_index = 0x00;
+                mus_state = mus_intro;
+                melody_period = title_melody_period;
+                set_PWM(0);
+            }
         default: 
             state = game_wait;
             break;
