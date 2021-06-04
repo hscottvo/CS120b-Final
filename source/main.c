@@ -284,7 +284,7 @@ int main(void) {
     /* Insert your solution below */
 
     while (1) {
-        task3.state = game_state;
+        // task3.state = game_state;
         task2.period = melody_period;
         for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime >= tasks[i]->period) {
