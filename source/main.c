@@ -202,10 +202,14 @@ int control_tick(int state) {
             if(game_state == game_wait) {
                 if (tempA == 0x01) {
                     state = diff_right;
-                    difficulty = difficulty == 0? difficulty: difficulty - 1;
+                    if (difficulty > 0) {
+                        difficulty -= 1; 
+                    } 
                 } else if (tempA == 0x04) {
                     state = diff_left;
-                    difficulty = difficulty == 3? difficulty: difficulty + 1;
+                    if (difficulty < 3) {
+                        difficulty += 1;
+                    }
                 }
             } else if (game_state == game_playing) {
                 if (tempA == 0x01) {
