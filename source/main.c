@@ -125,12 +125,13 @@ int display(int state) {
 
     if (game_state != game_playing) {
         if (game_state == game_wait){
-        unsigned char diff_led = 0x00;
+            unsigned char diff_led = 0x00;
             for(unsigned char i = 0; i < difficulty; ++i) {
                 diff_led = diff_led << 1;
                 diff_led |= 0x01;
             }
             PORTA = (PORTA & 0x07) | (diff_led << 3);
+            PORTD = 0x1F;
         } else {
             PORTA = (PORTA & 0x07) | (score << 3);
         }
