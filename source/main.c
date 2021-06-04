@@ -278,8 +278,7 @@ int control_tick(int state) {
 
 // enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0} obstacle_state;
 int obstacle_tick(int state) {
-    state = obstacle_state;
-    switch(state){
+    switch(obstacle_state){
         case obs_7:
             state = obs_6;
             obstacle_position = 0x40;
@@ -315,6 +314,7 @@ int obstacle_tick(int state) {
             obstacle = obstacles[rand() % 8];
             break;
     }
+    obstacle_state = state;
     return state;
 }
 
