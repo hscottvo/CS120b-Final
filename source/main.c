@@ -123,7 +123,7 @@ int display(int state) {
                             // 0: display pattern on row
                             // 1: do NOT display pattern on row
 
-    if (game_state == game_wait) {
+    if (game_state == game_wait ) {
         unsigned char diff_led = 0x00;
         for(unsigned char i = 0; i < difficulty; ++i) {
             diff_led = diff_led << 1;
@@ -133,34 +133,36 @@ int display(int state) {
         PORTC = 0x00;
         PORTD = 0xFF;
         return state;
-    } else PORTA = (PORTA & 0x07);
-    // Transitions
-    switch (state) {
-        case show_obs:  
-            state = show_player;  
-            break;
-        case show_player:
-            state = show_obs;
-            break;
-        default:    
-            state = show_obs;
-            break;
-    }    
-    // Actions
-    switch (state) {
-        case show_obs:    
-            pattern = obstacle;
-            row = obstacle_position;
-            break;
-        case show_player:
-            pattern = player;
-            row = 0x01;
-            break;
-        default:
-    break;
+    } else {
+        PORTA = (PORTA & 0x07);
+        // Transitions
+        switch (state) {
+            case show_obs:  
+                state = show_player;  
+                break;
+            case show_player:
+                state = show_obs;
+                break;
+            default:    
+                state = show_obs;
+                break;
+        }    
+        // Actions
+        switch (state) {
+            case show_obs:    
+                pattern = obstacle;
+                row = obstacle_position;
+                break;
+            case show_player:
+                pattern = player;
+                row = 0x01;
+                break;
+            default:
+        break;
+        }
+        PORTC = row;    // Pattern to display
+        PORTD = ~pattern;        // Row(s) displaying pattern    
     }
-    PORTC = row;    // Pattern to display
-    PORTD = ~pattern;        // Row(s) displaying pattern    
     return state;
 }
 
