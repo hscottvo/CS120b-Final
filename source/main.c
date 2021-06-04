@@ -36,7 +36,7 @@ unsigned char obstacle = 0x0B;
 unsigned char obstacle_position = 0x80;
 unsigned char player = 0x04;
 unsigned char difficulty = 0x01;
-unsigned char score = 0xFF;
+unsigned char score = 0x00;
 unsigned short obs_period = 200;
 
 unsigned char obstacles[8] = {0x0B, 0x19, 0x1E, 0x0D, 0x13, 0x04, 0x17, 0x07};
