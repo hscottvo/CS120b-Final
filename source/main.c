@@ -54,7 +54,7 @@ unsigned char player = 0x04;
 unsigned char difficulty = 0x00;
 unsigned char score = 0x00;
 
-double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
+double chromatic[37] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
                       880, 932.3, 987.8, 1047,  1109,  1175,  1245,  1319,  1397,  1480, 1568, 1661, 0};
 
@@ -87,7 +87,7 @@ unsigned char gameplay_melody[128] = {a_flat_1, rest, a_flat_1, rest, rest, rest
 unsigned short game_over_period = 167;
 unsigned char game_over_size = 0x24;
 unsigned char game_over_melody[24] = {a_flat_1, rest, g_1, g_flat_1, rest, f_1, e_1, rest, b_1, b_1, b_1, e_1, 
-                                    e_flat_1, rest, rest, rest, rest, rest, e_flat_2, rest, rest, rest, rest, rest }
+                                    e_flat_1, rest, rest, rest, rest, rest, e_flat_2, rest, rest, rest, rest, rest };
 
 unsigned char melody_index = 0x00;
 unsigned short melody_period = 100;
