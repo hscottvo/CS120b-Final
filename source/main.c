@@ -8,6 +8,8 @@
  *	code, is my own original work.
  */
 #include <avr/io.h>
+#include <stdio.h>
+#include <stdlib.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #include "timer.h"
@@ -53,6 +55,8 @@ unsigned char obstacle_position = 0x80;
 unsigned char player = 0x04;
 unsigned char difficulty = 0x00;
 unsigned char score = 0x00;
+
+unsigned char obstacles[8] = {0x0B, 0x19, 0x1E, 0x0D, 0x13, 0x04, 0x17, 0x07};
 
 double chromatic[37] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
@@ -178,6 +182,8 @@ int game(int state) {
                 mus_state = mus_gameplay;
                 melody_period = gameplay_melody_period;
                 set_PWM(0);
+                srand(melody_index * 7);
+                obstacle = obstacles[(rand() % 8)];
             }
             // else {
             //     state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
@@ -268,6 +274,45 @@ int control_tick(int state) {
     return state;
 }
 
+enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0};
+int obstacle_tick(int state) {
+    case obs_7:
+        state = obs_6;
+        obstacle_position = 0x40;
+        break;
+    case obs_6:
+        state = obs_5;
+        obstacle_position = 0x20;
+        break;
+    case obs_5:
+        state = obs_4;
+        obstacle_position = 0x10;
+        break;
+    case obs_4:
+        state = obs_3;
+        obstacle_position = 0x08;
+        break;
+    case obs_3:
+        state = obs_2;
+        obstacle_position = 0x04;
+        break;
+    case obs_2:
+        state = obs_1;
+        obstacle_position = 0x02;
+        break;
+    case obs_1:
+        state = obs_0;
+        obstacle_position = 0x01;
+        break;
+    case obs_0:
+        state = obs_7;
+        obstacle_position = 0x08;
+        srand(melody_index * 7);
+        obstacle = obstacles[rand() % 8];
+        break;
+    return state;
+}
+
 
 int main(void) {
     /* Insert DDR and PORT initializations */
@@ -276,8 +321,8 @@ int main(void) {
     DDRC = 0xFF; PORTC = 0x00;
     DDRD = 0xFF; PORTD = 0x00;
 
-    static task task1, task2, task3, task4;
-    task *tasks[] = {&task1, &task2, &task3, &task4};
+    static task task1, task2, task3, task4, task5;
+    task *tasks[] = {&task1, &task2, &task3, &task4, &task5};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
     task3.state = show_obs;
@@ -302,6 +347,11 @@ int main(void) {
     task4.period = 5;
     task4.elapsedTime = task4.period;
     task4.TickFct = &control_tick;
+
+    task5.state = obs_7;
+    task5.period = 1;
+    task5.elapsedTime = task5.period;
+    task5.TickFct = &obstacle_tick;
 
     TimerSet(1);
     TimerOn();
