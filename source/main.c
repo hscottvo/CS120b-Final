@@ -274,7 +274,7 @@ int main(void) {
     task1.TickFct = &game;
 
     task4.state = control_wait;
-    task4.period = 1;
+    task4.period = 5;
     task4.elapsedTime = task4.period;
     task4.TickFct = &control_tick;
 
