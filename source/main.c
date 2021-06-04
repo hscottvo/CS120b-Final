@@ -135,7 +135,7 @@ int display(int state) {
             PORTA = (PORTA & 0x07) | (score << 3);
         }
         PORTC = 0x00;
-        PORTD = 0xFF;
+        PORTD = (PORTD & 0x1F) | 0x1F;
         return state;
     } else {
         PORTA = (PORTA & 0x07) | (score << 3);
@@ -165,7 +165,7 @@ int display(int state) {
         break;
         }
         PORTC = row;    // Pattern to display
-        PORTD = ~pattern;        // Row(s) displaying pattern    
+        PORTD = (PORTD & 0x1F) | ~pattern;        // Row(s) displaying pattern    
     }
     return state;
 }
