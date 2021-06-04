@@ -166,7 +166,7 @@ int display(int state) {
         break;
         }
         PORTC = row;    // Pattern to display
-        PORTD = (PORTD & 0xE0) | ~pattern;        // Row(s) displaying pattern    
+        PORTD = (PORTD & 0xE0) | (~pattern & 0x1F);        // Row(s) displaying pattern    
     }
     return state;
 }
