@@ -187,6 +187,7 @@ int game(int state) {
                 obstacle_position = 0x80;
                 obstacle_state = obs_0;
                 obs_period = get_period(difficulty);
+                score = 0;
             }
             break;
         case game_start: 
@@ -310,6 +311,7 @@ int obstacle_tick(int state) {
             obstacle_position = 0x80;
             srand(melody_index * 7);
             obstacle = obstacles[rand() % 8];
+            score += 1;
             break;
     }
     obstacle_state = state;
