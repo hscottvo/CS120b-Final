@@ -90,7 +90,7 @@ unsigned char gameplay_melody[128] = {a_flat_1, rest, a_flat_1, rest, rest, rest
                                    a_2, a_2, a_2, a_2, b_flat_2, b_flat_2, b_flat_2, b_flat_2, b_2, b_2, b_2, b_2, c_2, c_2, c_2, rest};
 
 unsigned short game_over_period = 167;
-unsigned char game_over_size = 0x24;
+unsigned char game_over_size = 24;
 unsigned char game_over_melody[24] = {a_flat_1, rest, g_1, g_flat_1, rest, f_1, e_1, rest, b_1, b_1, b_1, e_1, 
                                     e_flat_1, rest, rest, rest, rest, rest, e_flat_2, rest, rest, rest, rest, rest };
 
@@ -112,8 +112,18 @@ int music(int state) {
             melody_index = (melody_index + 1) % gameplay_melody_size;
             break;
         case mus_over:
-            set_PWM(chromatic[gameplay_melody[melody_index]]);
-            melody_index = (melody_index + 1) % gameplay_melody_size;
+            if(melody_index >= game_over_size) {
+                game_state = game_wait;
+                melody_index = 0x00;
+                mus_state = mus_intro;
+                melody_period = title_melody_period;
+                set_PWM(0);
+            }
+            else {
+                set_PWM(chromatic[game_over_melody[melody_index]]);
+                melody_index = melody_index + 1;
+            }
+
             break;
         default:
             break;
@@ -200,6 +210,9 @@ int game(int state) {
             break;
         case game_playing: 
             if ((tempA & 0x07) == 0x02) state = game_reset;
+            else if ((obstacle_position == 0x01) && ((obstacle & player) != 0x00 )){
+                state = game_over;
+            }
             else state = game_playing;
             break;
         case game_reset:
