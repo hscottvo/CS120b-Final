@@ -307,7 +307,7 @@ int obstacle_tick(int state) {
             break;
         case obs_0:
             state = obs_7;
-            obstacle_position = 0x08;
+            obstacle_position = 0x80;
             srand(melody_index * 7);
             obstacle = obstacles[rand() % 8];
             break;
