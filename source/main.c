@@ -25,7 +25,7 @@ int get_period(int difficulty) {
         case 2:
             return 100;
         case 3:
-            return 80;
+            return 76;
         default:
             return 200;
     }
