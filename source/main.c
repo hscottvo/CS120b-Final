@@ -330,10 +330,10 @@ int main(void) {
     task *tasks[] = {&task1, &task2, &task3, &task4, &task5};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
-    task3.state = show_obs;
-    task3.period = 1;
-    task3.elapsedTime = task3.period;
-    task3.TickFct = &display;
+    task5.state = show_obs;
+    task5.period = 1;
+    task5.elapsedTime = task5.period;
+    task5.TickFct = &display;
 
     mus_state = mus_intro;
     melody_period = title_melody_period;
@@ -354,10 +354,10 @@ int main(void) {
     task4.TickFct = &control_tick;
 
     obstacle_state = obs_7;
-    task5.state = obstacle_state;
-    task5.period = 200;
-    task5.elapsedTime = task5.period;
-    task5.TickFct = &obstacle_tick;
+    task3.state = obstacle_state;
+    task3.period = 200;
+    task3.elapsedTime = task3.period;
+    task3.TickFct = &obstacle_tick;
 
     TimerSet(1);
     TimerOn();
