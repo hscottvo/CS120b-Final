@@ -123,7 +123,7 @@ int display(int state) {
                             // 0: display pattern on row
                             // 1: do NOT display pattern on row
 
-    if (game_state != game_playing) {
+    if (game_state == game_wait) {
         unsigned char diff_led = 0x00;
         for(unsigned char i = 0; i < difficulty; ++i) {
             diff_led = diff_led << 1;
@@ -181,12 +181,6 @@ int game(int state) {
                 obstacle_position = 0x80;
                 obstacle_state = obs_0;
                 obs_period = get_period(difficulty);
-            }
-            // else {
-            //     state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
-            //     mus_state = mus_intro;
-            //     melody_period = title_melody_period;
-            // }
             break;
         case game_start: 
             if ((tempA & 0x07) == 0x02) state = game_start; 
