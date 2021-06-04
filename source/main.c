@@ -212,6 +212,10 @@ int game(int state) {
             if ((tempA & 0x07) == 0x02) state = game_reset;
             else if ((obstacle_position == 0x01) && ((obstacle & player) != 0x00 )){
                 state = game_over;
+                mus_state = mus_over;
+                melody_index = 0x00;
+                melody_period = game_over_period;
+                set_PWM(0);
             }
             else state = game_playing;
             break;
