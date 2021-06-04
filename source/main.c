@@ -351,7 +351,7 @@ int main(void) {
     task4.TickFct = &control_tick;
 
     task5.state = obs_7;
-    task5.period = 1;
+    task5.period = 200;
     task5.elapsedTime = task5.period;
     task5.TickFct = &obstacle_tick;
 
