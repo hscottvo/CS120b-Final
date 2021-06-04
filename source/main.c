@@ -138,7 +138,7 @@ int display(int state) {
         PORTD = 0xFF;
         return state;
     } else {
-        PORTA = (PORTA & 0x07);
+        PORTA = (PORTA & 0x07) | (score << 3);
         // Transitions
         switch (state) {
             case show_obs:  
