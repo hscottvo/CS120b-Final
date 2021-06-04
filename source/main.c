@@ -18,36 +18,18 @@
 #include "speaker.h"
 #endif
 
-// void set_PWM(double frequency) {
-//     static double current_frequency;
-
-//     if (frequency != current_frequency) {
-//         if (!frequency) {TCCR3B &= 0x08;}
-//         else {TCCR3B |= 0x03;}
-
-//         if (frequency < 0.954) {OCR3A = 0xFFFF; }
-
-//         else if (frequency > 31250) { OCR3A = 0x0000; }
-
-//         else {OCR3A = (short)(8000000 / (128 * frequency)) - 1;}
-
-//         TCNT3 = 0;
-//         current_frequency = frequency;
-//     }
-// }
-
-// void PWM_on() {
-//     TCCR3A = (1 << COM3A0);
-
-//     TCCR3B = (1 << WGM32) | (1 << CS31) | (1 << CS30);
-
-//     set_PWM(0);
-// }
-
-// void PWM_off() {
-//     TCCR3A = 0x00;
-//     TCCR3B = 0x00;
-// }
+int get_period(int difficulty) {
+    switch(difficulty) {
+        case 1:
+            return 200;
+        case 2:
+            return 150;
+        case 3:
+            return 100;
+        default:
+            return 200;
+    }
+}
 
 unsigned char tempA = 0x00;
 unsigned char obstacle = 0x0B;
@@ -55,6 +37,7 @@ unsigned char obstacle_position = 0x80;
 unsigned char player = 0x04;
 unsigned char difficulty = 0x00;
 unsigned char score = 0x00;
+unsigned short obs_period = 200;
 
 unsigned char obstacles[8] = {0x0B, 0x19, 0x1E, 0x0D, 0x13, 0x04, 0x17, 0x07};
 enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0} obstacle_state;
@@ -197,6 +180,7 @@ int game(int state) {
                 obstacle = obstacles[(rand() % 8)];
                 obstacle_position = 0x80;
                 obstacle_state = obs_0;
+                obs_period = get_period(difficulty);
             }
             // else {
             //     state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
@@ -331,7 +315,6 @@ int obstacle_tick(int state) {
     return state;
 }
 
-
 int main(void) {
     /* Insert DDR and PORT initializations */
     DDRA = 0xF8; PORTA = 0x07;
@@ -380,6 +363,7 @@ int main(void) {
     while (1) {
         // task3.state = game_state;
         task2.period = melody_period;
+        task3.period = obs_period;
         for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime >= tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
