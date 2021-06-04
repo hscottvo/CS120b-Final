@@ -40,7 +40,7 @@ unsigned char score = 0xFF;
 unsigned short obs_period = 200;
 
 unsigned char obstacles[8] = {0x0B, 0x19, 0x1E, 0x0D, 0x13, 0x04, 0x17, 0x07};
-enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0} obstacle_state;
+enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0, obs_wait} obstacle_state;
 
 double chromatic[37] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
@@ -199,6 +199,7 @@ int game(int state) {
             else if ((obstacle_position == 0x01) && ((obstacle & player) != 0x00 )){
                 state = game_over;
                 mus_state = mus_over;
+                obs_state = obs_wait;
                 melody_index = 0x00;
                 melody_period = game_over_period;
                 set_PWM(0);
@@ -313,6 +314,8 @@ int obstacle_tick(int state) {
             obstacle = obstacles[rand() % 8];
             score += 1;
             break;
+        case obs_wait:
+            state = obs_wait;
     }
     obstacle_state = state;
     return state;
