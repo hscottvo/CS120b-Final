@@ -122,6 +122,7 @@ int display(int state) {
         PORTA = (PORTA & 0x07) | (difficulty << 3);
         PORTC = 0x00;
         PORTD = 0xFF;
+        return state;
     }
     // Transitions
     switch (state) {
