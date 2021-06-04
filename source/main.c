@@ -226,13 +226,8 @@ int game(int state) {
             }
             break;
         case game_over:
-            if (melody_index >= 24) {
-                state = game_wait;
-                melody_index = 0x00;
-                mus_state = mus_intro;
-                melody_period = title_melody_period;
-                set_PWM(0);
-            }
+            state = game_over;
+            break;
         default: 
             state = game_wait;
             break;
