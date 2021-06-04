@@ -48,6 +48,9 @@
 // }
 
 unsigned char tempA = 0x00;
+unsigned char obstacle = 0x00;
+unsigned char obstacle_position = 0x00;
+unsigned char player = 0x00;
 
 double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
@@ -128,11 +131,11 @@ int display(int state) {
     // Actions
     switch (state) {
         case show_obs:    
-            pattern = 0x1B;
-            row = 0x80;
+            pattern = obstacle;
+            row = obstacle_position;
             break;
         case show_player:
-            pattern = 0x04;
+            pattern = player;
             row = 0x01;
             break;
         default:
@@ -225,7 +228,7 @@ int main(void) {
     while (1) {
         task3.state = game_state;
         task2.period = melody_period;
-        for(unsigned long i = 0; i < numTasks-1; i++) {
+        for(unsigned long i = 0; i < numTasks; i++) {
             if(tasks[i]->elapsedTime >= tasks[i]->period) {
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
