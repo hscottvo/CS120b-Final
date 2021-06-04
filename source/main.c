@@ -52,6 +52,7 @@ unsigned char obstacle = 0x0B;
 unsigned char obstacle_position = 0x10;
 unsigned char player = 0x04;
 unsigned char difficulty = 0x00;
+unsigned char score = 0x00;
 
 double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
@@ -119,11 +120,16 @@ int display(int state) {
                             // 1: do NOT display pattern on row
 
     if (game_state != game_playing) {
-        PORTA = (PORTA & 0x07) | (difficulty << 3);
+        unsigned char diff_led = 0x00;
+        for(unsigned char i = 0; i < difficulty; ++i) {
+            diff_led = diff_led << 1;
+            diff_led |= 0x01;
+        }
+        PORTA = (PORTA & 0x07) | (diff_led << 3);
         PORTC = 0x00;
         PORTD = 0xFF;
         return state;
-    }
+    } else PORTA = (PORTA & 0x07);
     // Transitions
     switch (state) {
         case show_obs:  
