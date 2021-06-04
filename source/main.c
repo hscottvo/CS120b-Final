@@ -117,6 +117,8 @@ int display(int state) {
     static unsigned char row = 0x00;      // Row(s) displaying pattern. 
                             // 0: display pattern on row
                             // 1: do NOT display pattern on row
+
+    PORTA = (PORTA & 0xF1) | difficulty << 3;
     // Transitions
     switch (state) {
         case show_obs:  
@@ -194,6 +196,46 @@ int game(int state) {
 
 enum control_states {control_wait, diff_left, diff_right, move_left, move_right};
 int control_tick(int state) {
+    tempA = ~PINA & 0x07;
+    switch(state){ 
+        case control_wait: 
+            if(game_state == game_wait) {
+                if (tempA == 0x01) {
+                    state = diff_right;
+                    difficulty = difficulty == 0? difficulty: difficulty - 1;
+                } else if (tempA == 0x04) {
+                    state = diff_left;
+                    difficulty = difficulty == 3? difficulty: difficulty + 1;
+                }
+            } else if (game_state == game_playing) {
+                if (tempA == 0x01) {
+                    state = move_right;
+                    player = player == 1? player: player >> 1;
+                } else if (tempA == 0x04) {
+                    state = move_left;
+                    player = player == 16? player: player << 1;
+                }
+            } else state = control_wait;
+            break;
+        case diff_left: 
+            if (tempA == 0x00) state = control_wait;
+            else state = diff_left;
+            break;
+        case diff_right:
+            if (tempA == 0x00) state = control_wait;
+            else state = diff_right;
+            break;
+        case move_left: 
+            if (tempA == 0x00) state = control_wait;
+            else state = move_left;
+            break;
+        case move_right: 
+            if (tempA == 0x00) state = control_wait;
+            else state = move_right;
+            break;
+        default: 
+            state = control_wait;
+    }
     return state;
 }
 
@@ -205,8 +247,8 @@ int main(void) {
     DDRC = 0xFF; PORTC = 0x00;
     DDRD = 0xFF; PORTD = 0x00;
 
-    static task task1, task2, task3;
-    task *tasks[] = {&task1, &task2, &task3};
+    static task task1, task2, task3, task4;
+    task *tasks[] = {&task1, &task2, &task3, &task4};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
     
     task3.state = show_obs;
@@ -223,9 +265,14 @@ int main(void) {
 
     game_state = game_wait;
     task1.state = game_state;
-    task1.period = 100;
+    task1.period = 1;
     task1.elapsedTime = task1.period;
     task1.TickFct = &game;
+
+    task4.state = control_wait;
+    task4.period = 1;
+    task4.elapsedTime = task4.period;
+    task4.TickFct = &control_tick;
 
     TimerSet(1);
     TimerOn();
