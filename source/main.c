@@ -89,7 +89,7 @@ unsigned char gameplay_melody[128] = {a_flat_1, rest, a_flat_1, rest, rest, rest
                                    a_flat_1, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest, rest, rest, a_flat_1, rest,
                                    a_2, a_2, a_2, a_2, b_flat_2, b_flat_2, b_flat_2, b_flat_2, b_2, b_2, b_2, b_2, c_2, c_2, c_2, rest};
 
-unsigned short game_over_period = 167;
+unsigned short game_over_period = 133;
 unsigned char game_over_size = 24;
 unsigned char game_over_melody[24] = {a_flat_1, rest, g_1, g_flat_1, rest, f_1, e_1, rest, b_1, b_1, b_1, e_1, 
                                     e_flat_1, rest, rest, rest, rest, rest, e_flat_2, rest, rest, rest, rest, rest };
