@@ -48,8 +48,8 @@
 // }
 
 unsigned char tempA = 0x00;
-unsigned char obstacle = 0x00;
-unsigned char obstacle_position = 0x00;
+unsigned char obstacle = 0x0B;
+unsigned char obstacle_position = 0x10;
 unsigned char player = 0x04;
 unsigned char difficulty = 0x00;
 
