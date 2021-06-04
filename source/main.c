@@ -185,7 +185,7 @@ int game(int state) {
                 melody_period = gameplay_melody_period;
                 set_PWM(0);
                 obstacle = obstacles[(rand() % 8)];
-                obstacle_state = obs_7;
+                obstacle_state = obs_0;
             }
             // else {
             //     state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
