@@ -178,12 +178,13 @@ int game(int state) {
         case game_wait: 
             if ((tempA & 0x07) == 0x02) {
                 state = game_start;      // press middle button: start game
+                srand(melody_index * 7);
                 melody_index = 0x00;
                 mus_state = mus_gameplay;
                 melody_period = gameplay_melody_period;
                 set_PWM(0);
-                srand(melody_index * 7);
                 obstacle = obstacles[(rand() % 8)];
+                obstacle_state = obs_7;
             }
             // else {
             //     state = game_wait;      // otherwise let player set difficulty (in controls tick fct)
@@ -274,8 +275,9 @@ int control_tick(int state) {
     return state;
 }
 
-enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0};
+enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0} obstacle_state;
 int obstacle_tick(int state) {
+    state = obstacle_state;
     switch(state){
         case obs_7:
             state = obs_6;
@@ -350,7 +352,8 @@ int main(void) {
     task4.elapsedTime = task4.period;
     task4.TickFct = &control_tick;
 
-    task5.state = obs_7;
+    obstacle_state = obs_7;
+    task5.state = obstacle_state;
     task5.period = 200;
     task5.elapsedTime = task5.period;
     task5.TickFct = &obstacle_tick;
