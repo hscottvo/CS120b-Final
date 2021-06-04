@@ -50,7 +50,7 @@
 unsigned char tempA = 0x00;
 unsigned char obstacle = 0x00;
 unsigned char obstacle_position = 0x00;
-unsigned char player = 0x00;
+unsigned char player = 0x04;
 unsigned char difficulty = 0x00;
 
 double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
