@@ -135,7 +135,7 @@ int display(int state) {
             PORTA = (PORTA & 0x07) | (score << 3);
         }
         PORTC = 0x00;
-        PORTD = (score >> 5) | 0x1F;
+        PORTD = (score & 0xE0) | 0x1F;
         return state;
     } else {
         PORTA = (PORTA & 0x07) | (score << 3);
