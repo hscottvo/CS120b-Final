@@ -199,7 +199,7 @@ int game(int state) {
             else if ((obstacle_position == 0x01) && ((obstacle & player) != 0x00 )){
                 state = game_over;
                 mus_state = mus_over;
-                obs_state = obs_wait;
+                obstacle_state = obs_wait;
                 melody_index = 0x00;
                 melody_period = game_over_period;
                 set_PWM(0);
