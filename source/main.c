@@ -269,7 +269,7 @@ int main(void) {
 
     game_state = game_wait;
     task1.state = game_state;
-    task1.period = 1;
+    task1.period = 100;
     task1.elapsedTime = task1.period;
     task1.TickFct = &game;
 
