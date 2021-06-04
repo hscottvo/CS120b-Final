@@ -35,7 +35,7 @@ unsigned char tempA = 0x00;
 unsigned char obstacle = 0x0B;
 unsigned char obstacle_position = 0x80;
 unsigned char player = 0x04;
-unsigned char difficulty = 0x00;
+unsigned char difficulty = 0x01;
 unsigned char score = 0x00;
 unsigned short obs_period = 200;
 
