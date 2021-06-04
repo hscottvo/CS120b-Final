@@ -232,7 +232,7 @@ int control_tick(int state) {
             if(game_state == game_wait) {
                 if (tempA == 0x01) {
                     state = diff_right;
-                    if (difficulty > 0) {
+                    if (difficulty > 1) {
                         difficulty -= 1; 
                     } 
                 } else if (tempA == 0x04) {
