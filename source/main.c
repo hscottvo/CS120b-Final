@@ -51,6 +51,7 @@ unsigned char tempA = 0x00;
 unsigned char obstacle = 0x00;
 unsigned char obstacle_position = 0x00;
 unsigned char player = 0x00;
+unsigned char difficulty = 0x00;
 
 double chromatic[36] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
@@ -190,6 +191,12 @@ int game(int state) {
     game_state = state;
     return state;
 }
+
+enum control_states {control_wait, diff_left, diff_right, move_left, move_right};
+int control_tick(int state) {
+    return state;
+}
+
 
 int main(void) {
     /* Insert DDR and PORT initializations */
