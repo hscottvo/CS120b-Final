@@ -118,7 +118,7 @@ int display(int state) {
                             // 0: display pattern on row
                             // 1: do NOT display pattern on row
 
-    // PORTA = (PORTA & 0xF1) | (difficulty << 3);
+    PORTA = (PORTA & 0x07) | (difficulty << 3);
     // Transitions
     switch (state) {
         case show_obs:  
