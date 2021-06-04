@@ -118,7 +118,11 @@ int display(int state) {
                             // 0: display pattern on row
                             // 1: do NOT display pattern on row
 
-    PORTA = (PORTA & 0x07) | (difficulty << 3);
+    if (game_state != game_playing) {
+        PORTA = (PORTA & 0x07) | (difficulty << 3);
+        PORTC = 0x00;
+        PORTD = 0xFF;
+    }
     // Transitions
     switch (state) {
         case show_obs:  
