@@ -57,6 +57,7 @@ unsigned char difficulty = 0x00;
 unsigned char score = 0x00;
 
 unsigned char obstacles[8] = {0x0B, 0x19, 0x1E, 0x0D, 0x13, 0x04, 0x17, 0x07};
+enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0} obstacle_state;
 
 double chromatic[37] = {220, 233.1, 246.9, 261.6, 277.2, 293.7, 311.1, 329.6, 349.2, 370,  392,  415.3, 
                       440, 466.2, 493.9, 523.3, 554.4, 587.3, 622.3, 659.3, 698.5, 740,  784,  830.6,
@@ -275,7 +276,7 @@ int control_tick(int state) {
     return state;
 }
 
-enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0} obstacle_state;
+// enum obstacle_states {obs_7, obs_6, obs_5, obs_4, obs_3, obs_2, obs_1, obs_0} obstacle_state;
 int obstacle_tick(int state) {
     state = obstacle_state;
     switch(state){
